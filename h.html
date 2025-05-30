@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mayank | Full Stack Developer</title>
+  
+  <!-- =========================  CSS  ========================= -->
+  <style>
+    /* ---------- CSS RESET ---------- */
+    *,*::before,*::after{box-sizing:border-box;padding:0;margin:0}
+    html{scroll-behavior:smooth;font-size:16px}
+    body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;line-height:1.6;color:#1f2937;background:#f9fafb}
+    a{text-decoration:none;color:inherit}
+    img{display:block;max-width:100%}
+    ul{list-style:none}
+
+    /* ---------- THEME VARIABLES ---------- */
+    :root{
+      --clr-primary:#6366f1;   /* indigo-500 */
+      --clr-primary-dark:#4f46e5;
+      --clr-primary-light:#e0e7ff;
+      --clr-bg:#ffffff;
+      --clr-text:#1f2937;
+      --radius:0.75rem;
+      --shadow:0 8px 20px rgba(0,0,0,.07);
+    }
+
+    /* ---------- GLOBAL UTILS ---------- */
+    .container{width:90%;max-width:1100px;margin-inline:auto}
+    .btn{display:inline-block;padding:.75rem 1.5rem;background:var(--clr-primary);color:#fff;border-radius:var(--radius);font-weight:600;transition:.3s}
+    .btn:hover{background:var(--clr-primary-dark);transform:translateY(-2px)}
+    .section{padding-block:4rem}
+    .section-heading{font-size:2rem;font-weight:700;text-align:center;margin-bottom:2.5rem;position:relative}
+    .section-heading::after{content:"";width:80px;height:4px;background:var(--clr-primary);position:absolute;left:50%;transform:translateX(-50%);bottom:-10px;border-radius:2px}
+
+    /* ---------- NAVBAR ---------- */
+    header{position:sticky;top:0;z-index:100;background:var(--clr-bg);box-shadow:0 1px 4px rgba(0,0,0,.06)}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
+    .nav__brand{font-size:1.5rem;font-weight:700;color:var(--clr-primary-dark)}
+    .nav__menu{display:flex;gap:2rem;font-weight:500}
+    .nav__link{position:relative}
+    .nav__link::after{content:"";position:absolute;bottom:-6px;left:0;width:0;height:2px;background:var(--clr-primary);transition:width .3s}
+    .nav__link:hover::after,.nav__link.active::after{width:100%}
+    /* Mobile menu */
+    .nav__toggle{display:none;flex-direction:column;gap:4px;cursor:pointer}
+    .nav__toggle span{width:24px;height:3px;background:var(--clr-text);border-radius:3px;transition:.3s}
+    @media (max-width:768px){
+      .nav__menu{position:fixed;inset:0 0 0 40%;background:var(--clr-bg);flex-direction:column;padding-top:6rem;transform:translateX(100%);transition:.4s}
+      .nav__menu.open{transform:none}
+      .nav__toggle{display:flex}
+    }
+
+    /* ---------- HERO ---------- */
+    #home{min-height:90vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:linear-gradient(135deg,var(--clr-primary-light),#fff)}
+    #home h1{font-size:clamp(2.5rem,5vw,3.5rem);font-weight:800;margin-bottom:.75rem;color:var(--clr-primary-dark)}
+    #home p{max-width:600px;margin-bottom:2rem;font-size:1.125rem;color:#374151}
+
+    /* ---------- SKILLS ---------- */
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1.25rem;text-align:center}
+    .skill-card{padding:1rem;background:var(--clr-bg);border-radius:var(--radius);box-shadow:var(--shadow);font-weight:600}
+
+    /* ---------- ABOUT ---------- */
+    #about .about-wrapper{display:flex;flex-direction:column;align-items:center;gap:2rem}
+    #about img{width:140px;height:140px;border-radius:50%;object-fit:cover;border:4px solid var(--clr-primary)}
+    #about p{max-width:700px;text-align:center}
+
+    /* ---------- EDUCATION ---------- */
+    .edu-list{display:grid;gap:1.25rem;margin-inline:auto;max-width:700px}
+    .edu-item{background:var(--clr-bg);padding:1.25rem;border-left:4px solid var(--clr-primary);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .edu-item h4{font-weight:700;margin-bottom:.25rem}
+    .edu-item span{font-size:.875rem;color:#6b7280}
+
+    /* ---------- PORTFOLIO ---------- */
+    .portfolio-grid{display:grid;gap:1.5rem;width:100%}
+    @media(min-width:700px){.portfolio-grid{grid-template-columns:repeat(2,1fr)}}
+    .project-card{background:var(--clr-bg);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+    .project-card__body{padding:1.25rem;flex:1 1 auto;display:flex;flex-direction:column}
+    .project-card h4{font-size:1.25rem;font-weight:700;margin-bottom:.5rem}
+    .project-card p{flex-grow:1;margin-bottom:1rem}
+    .project-card a{font-weight:600;color:var(--clr-primary)}
+    .project-card a:hover{color:var(--clr-primary-dark)}
+
+    /* ---------- CONTACT ---------- */
+    form.contact-form{margin-top:2rem;max-width:550px;margin-inline:auto;display:grid;gap:1rem}
+    form.contact-form input,form.contact-form select,form.contact-form textarea{padding:.75rem;border:2px solid #d1d5db;border-radius:var(--radius);font-size:1rem;width:100%}
+    form.contact-form input:focus,form.contact-form textarea:focus,form.contact-form select:focus{outline:none;border-color:var(--clr-primary)}
+
+    /* ---------- FOOTER ---------- */
+    footer{background:var(--clr-primary-light);padding:1rem 0;text-align:center;font-size:.875rem;color:#374151}
+
+    /* ---------- ANIMATIONS ---------- */
+    .fade-in{opacity:0;transform:translateY(40px);transition:.8s ease-out}
+    .fade-in.show{opacity:1;transform:none}
+  </style>
+</head>
+<body>
+  <!-- =========================  HEADER / NAV  ========================= -->
+  <header>
+    <div class="container nav">
+      <a href="#home" class="nav__brand">My-logo</a>
+      <nav class="nav__menu" id="nav-menu">
+        <a href="#home" class="nav__link active">Home</a>
+        <a href="#about" class="nav__link">About</a>
+        <a href="#portfolio" class="nav__link">Portfolio</a>
+        <a href="#contact" class="nav__link">Contact</a>
+        <a href="#profile" class="nav__link">Profile</a>
+      </nav>
+      <div class="nav__toggle" id="nav-toggle" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================  HERO  ========================= -->
+  <section id="home" class="section">
+    <h1 class="fade-in">Hey, I'm Mayank |</h1>
+    <p class="fade-in" style="transition-delay:.15s">Full Stack Developer</p>
+    <p class="fade-in" style="transition-delay:.3s">I'm a dedicated Full Stack Developer with strong skills in building dynamic web apps. Dedicated Web DEVELOPER building dynamic web apps.</p>
+    <a href="Mayank cv.pdf" class="btn fade-in" style="transition-delay:.45s">Download CV</a>
+
+  </section>
+
+  <!-- =========================  SKILLS  ========================= -->
+  <section class="section" id="skills">
+    <h2 class="section-heading">My Skills</h2>
+    <div class="skills-grid fade-in">
+      <div class="skill-card">HTML5</div>
+      <div class="skill-card">CSS3</div>
+      <div class="skill-card">JavaScript</div>
+      <div class="skill-card">React.js</div>
+      <div class="skill-card">Tailwind CSS</div>
+      <div class="skill-card">Node.js</div>
+      <div class="skill-card">Python</div>
+      <div class="skill-card">MongoDB</div>
+      <div class="skill-card">SQL</div>
+      <div class="skill-card">Bootstrap</div>
+      <div class="skill-card">Machine Learning</div>
+      <div class="skill-card">Express.js</div>
+    </div>
+  </section>
+
+  <!-- =========================  ABOUT  ========================= -->
+  <section class="section" id="about">
+    <h2 class="section-heading">About Me</h2>
+    <div class="about-wrapper fade-in">
+      <img src="WhatsApp Image 2025-05-30 at 14.59.38.jpeg" alt="Surbhi profile photo">
+      <p>I'm a passionate freelancer, intern, and job‑seeker who crafts modern and responsive web experiences using React, Tailwind CSS, GSAP animations, and Framer Motion. Let’s build something amazing together!</p>
+      <a href="https://github.com/Rajmayank90" class="btn" target="_blank" rel="noopener">Visit my GitHub</a>
+    </div>
+  </section>
+
+  <!-- =========================  EDUCATION  ========================= -->
+  <section class="section" id="education">
+    <h2 class="section-heading">Education</h2>
+    <div class="edu-list fade-in">
+      <div class="edu-item"><h4>Bachelor of Computer Science Engineering</h4><span>2022‑2026 | TNU, Kolkata</span><p>Pursuing a Bachelor of Computer Science Engineering(Btech) with a strong academic foundation in programming, data structures, web development, and database management.</p></div>
+      <div class="edu-item"><h4>The Complete Web Development Bootcamp</h4><span>2024 | Ailabs  (Offline)</span><p>Completed a bootcamp covering HTML, CSS, JavaScript, React.js, Node.js, Express.js, and MongoDB.</p></div>
+      <div class="edu-item"><h4>Intermediate I.SC</h4><span>2018 | LD college  80%</span></div>
+      <div class="edu-item"><h4>Class 10th</h4><span>2016 | SVM Munger · 70%</span></div>
+    </div>
+  </section>
+
+  <!-- =========================  PORTFOLIO  ========================= -->
+  <section class="section" id="portfolio">
+    <h2 class="section-heading">Portfolio</h2>
+    <div class="portfolio-grid fade-in">
+      <div class="project-card">
+        <div class="project-card__body">
+          <h4>E‑Commerce Website</h4>
+          <p>Fully responsive landing page using HTML, CSS & JS. Designed in Figma and later converted to React.</p>
+          <p><a href="https://github.com/Rajmayank90">Read More</a> · <a href="#">View on GitHub</a></p>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-card__body">
+          <h4>News App</h4>
+          <p>Real‑time news app built with React.js & Tailwind CSS fetching data from public News API.</p>
+          <p><a href="#">Read More</a> · <a href="https://github.com/Rajmayank90">View on GitHub</a></p>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-card__body">
+          <h4>Advanced To‑Do App</h4>
+          <p>React‑based to‑do list with task counter and extra productivity features.</p>
+          <p><a href="#">Read More</a> · <a href="#">View on GitHub</a></p>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-card__body">
+          <h4>Authenticated Login & Signup App</h4>
+          <p>Full stack authentication system using Tailwind, React Router & React Toastify.</p>
+          <p><a href="#">Read More</a> · <a href="#">View on GitHub</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================  CONTACT  ========================= -->
+  <section class="section" id="contact">
+    <h2 class="section-heading">Contact</h2>
+    <p class="container" style="text-align:center">Thanks for checking out my portfolio! If you’d like to collaborate, hire me, or just say hello, feel free to reach out 😊.</p>
+    <form class="contact-form fade-in" onsubmit="return false;">
+      <input type="text" placeholder="First name" required>
+      <input type="text" placeholder="Last name" required>
+      <select required>
+        <option value="">Choose a topic</option>
+        <option value="Collaboration">Collaboration</option>
+        <option value="Job">Job Opportunity</option>
+        <option value="Hello">Just Say Hello</option>
+      </select>
+      <input type="email" placeholder="Email" required>
+      <input type="tel" placeholder="Phone number" pattern="[0-9]{10}" title="9097599759">
+      <textarea rows="4" placeholder="Message" required></textarea>
+      <button type="submit" class="btn">Let's talk</button>
+    </form>
+  </section>
+
+  <!-- =========================  FOOTER  ========================= -->
+  <footer>
+    © 2025 Mayank portfolio, Inc. All rights reserved.
+  </footer>
+
+  <!-- =========================  JS  ========================= -->
+  <script>
+    // ---------- NAV TOGGLE ----------
+    const navToggle = document.getElementById('nav-toggle');
+    const navMenu   = document.getElementById('nav-menu');
+
+    navToggle.addEventListener('click',()=>{
+      navMenu.classList.toggle('open');
+      navToggle.classList.toggle('open');
+    });
+
+    // ---------- SMOOTH SCROLL & ACTIVE LINK ----------
+    const links = document.querySelectorAll('.nav__link');
+
+    links.forEach(link=>{
+      link.addEventListener('click', ()=>{
+        if(navMenu.classList.contains('open')) navMenu.classList.remove('open');
+      });
+    });
+
+    // Highlight active nav link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', ()=>{
+      const scrollY = window.pageYOffset;
+      sections.forEach(current =>{
+        const sectionHeight = current.offsetHeight;
+        const sectionTop    = current.offsetTop - 80;
+        const id = current.getAttribute('id');
+        if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight){
+          document.querySelector('.nav__link[href*='+id+']').classList.add('active');
+        } else {
+          document.querySelector('.nav__link[href*='+id+']').classList.remove('active');
+        }
+      });
+    });
+
+    // ---------- SCROLL ANIMATIONS ----------
+    const faders = document.querySelectorAll('.fade-in');
+    const appearOptions = {threshold:0.15, rootMargin:"0px 0px -50px 0px"};
+    const appearOnScroll = new IntersectionObserver((entries,observer)=>{
+      entries.forEach(entry=>{
+        if(!entry.isIntersecting) return;
+        entry.target.classList.add('show');
+        observer.unobserve(entry.target);
+      });
+    },appearOptions);
+    faders.forEach(el=>appearOnScroll.observe(el));
+  </script>
+</body>
+</html>
